@@ -2,9 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import {z} from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../store/loginSlice";
+import {BASE_URL} from "../utils/constants"
 
 const loginSchema=z.object({
    email: z.string().nonempty("Email is required").email("Invalid email format"),
@@ -13,18 +14,19 @@ const loginSchema=z.object({
 
 const Login = () => {
   const dispatch=useDispatch();
+  const navigate=useNavigate();
 const {register,reset,handleSubmit,formState: { errors }}=useForm({
         resolver:zodResolver(loginSchema),
         mode:"onSubmit",
         defaultValues:{
-            email:"",
-            password:""
+            email:"renu29swami@gmail.com",
+            password:"renu@2921"
         }
     });
     
      const onSubmit=async(data)=>{
       try{
-       const response=await fetch("http://localhost:3000/login",{
+       const response=await fetch(BASE_URL+"/login",{
           method:"POST",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify(data),
@@ -32,7 +34,8 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
         }); 
         const jsonResponse=await response.json();
         dispatch(setUserData(jsonResponse.data));
-        reset()
+        reset();
+        navigate("/");
       }catch(error){
         console.error(error.message);
       }
