@@ -12,7 +12,7 @@ const Body = () => {
     const location = useLocation();
     const userData=useSelector((store)=>store.login.userData);
   useEffect(() => {
-  if (location.pathname === "/login") return;
+  if (location.pathname === "/login" || location.pathname === "/signup") return;
   loggedInUser();
 }, [location.pathname]);
 

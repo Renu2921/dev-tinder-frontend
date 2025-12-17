@@ -14,6 +14,12 @@ const editProfileSchema = z.object({
   age: z.coerce.number().min(1, "Age is required"),
   gender: z.string().min(1, "Gender is required"),
   about: z.string().min(1, "About is required"),
+  skills: z
+  .string()
+  .min(1, "Skills are required")
+  .transform((val) =>
+    val.split(",").map((s) => s.trim()).filter(Boolean)
+  ),
 });
 
 const EditProfile = () => {
@@ -41,6 +47,7 @@ const EditProfile = () => {
         age: userData.age,
         gender: userData.gender,
         about: userData.about,
+         skills: userData.skills?.join(", "),
       });
     }
   }, [userData, reset]);
@@ -148,6 +155,17 @@ const EditProfile = () => {
     />
     {errors.about && (
       <p className="text-sm text-red-600">{errors.about.message}</p>
+    )}
+  </div>
+
+  <div className="mb-6">
+    <label className="block mb-1">Skills</label>
+    <textarea
+      {...register("skills")}
+      className="w-full px-3 py-2 rounded bg-gray-300"
+    />
+    {errors.skills && (
+      <p className="text-sm text-red-600">{errors.skills.message}</p>
     )}
   </div>
 
