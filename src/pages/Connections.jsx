@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setConnections } from '../store/connectionSlice';
 
 const Connections = () => {
+  const [loading,setLoading]=useState(false);
 const dispatch=useDispatch();
 const connections=useSelector((store)=>store.connection.connections);
-console.log(connections);
     useEffect(()=>{
      connectionData();
     },[]);
 
     const connectionData=async()=>{
         try{
+          setLoading(true);
            const response=await fetch(BASE_URL+"/request/myMatches",{
             Method:"GET",
             credentials:"include"
@@ -21,19 +22,39 @@ console.log(connections);
             dispatch(setConnections(jsonData.data))
         }catch(error){
             console.log(error);
+        }finally{
+          setLoading(false);
         }
+    }
+    if (loading) {
+  return (
+    <div className="flex justify-center items-center mt-40">
+      <div className="w-10 h-10 border-4 border-pink-800 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+}
+
+if(connections?.length===0){
+        return (
+            <>
+            <div className="flex flex-col justify-center items-center mt-40">
+      <h1 className="font-bold text-[3rem]">OOPS!!</h1>
+      <p className="font-semibold text-md">No Connection Found</p>
+      </div>
+            </>
+        )
     }
   return (
     <div className=''>
       <p className='text-center font-bold text-[2rem] m-10'>Your Connections!!</p>
       <div className='flex flex-col justify-center items-center'>
         {connections?.map((connection)=>(
-            <div className='w-[40%] border rounded-xl flex  items-center gap-2 px-6 py-2  mt-4 ' key={connection?._id}>
+            <div className='w-[50%] border rounded-xl flex  items-center gap-4 px-6 py-2  mt-4 ' key={connection?._id}>
                 <div>
-                <img className='w-20 h-20 rounded-[100%]' src={connection?.imageUrl}/>
+                <img className='w-28 h-28 rounded-[100%]' src={connection?.imageUrl}/>
                 </div>
                 <div>
-               <p><span>{connection?.firstName}</span><span>{connection?.lastName}</span></p> 
+               <p className='font-semibold text-[1.5rem]'><span>{connection?.firstName}</span><span>{connection?.lastName}</span></p> 
                <p><span>{connection?.age}</span>, <span>{connection?.gender}</span></p> 
                <p>{connection?.about}</p> 
                </div>

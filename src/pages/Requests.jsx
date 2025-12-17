@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeReq, setRequests } from '../store/requestsSlice';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Requests = () => {
+    const [loading,setLoading]=useState(false);
 const dispatch=useDispatch();
 const navigate=useNavigate();
 const requestData=useSelector((store)=>store.request.requests);
-console.log(requestData);
 
     useEffect(()=>{
      connectionData();
@@ -16,31 +18,53 @@ console.log(requestData);
 
     const connectionData=async()=>{
         try{
+            setLoading(true);
            const response=await fetch(BASE_URL+"/request/received",{
             method:"GET",
             credentials:"include"
            })
            const jsonData=await response.json();
-           console.log(jsonData);
            dispatch(setRequests(jsonData.data));
         }catch(error){
             console.log(error);
+        }finally{
+            setLoading(false);
         }
     }
-
+    
     const handleReq=async(id,status)=>{
      try{
-        const response=await fetch(`${BASE_URL}/request/review/${status}/${id}`,{
-            method:"POST",
-            credentials:"include"
-        });
-        const jsonData=await response.json();
-        //  navigate("/connections");
-        dispatch(removeReq(id));
-
-     }catch(error){
-        console.log(error);
+        const response=await axios.post(`${BASE_URL}/request/review/${status}/${id}`,{},
+             {withCredentials:true}
+        );
+        if(response.data.success){
+            dispatch(removeReq(id));
+            if(response.data.data.status=="accepted"){
+                toast.success("Request Accepted!");
+            }else{
+                toast.error("Request Rejected!");
+            }
+        }
+        }catch(error){
+        toast.error(error.response.data.message);
      }
+    }
+if (loading) {
+  return (
+    <div className="flex justify-center items-center mt-40">
+      <div className="w-10 h-10 border-4 border-pink-800 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+}
+    if(requestData?.length===0){
+        return (
+            <>
+            <div className="flex flex-col justify-center items-center mt-40">
+      <h1 className="font-bold text-[3rem]">OOPS!!</h1>
+      <p className="font-semibold text-md">No new Requests</p>
+      </div>
+            </>
+        )
     }
   return (
    <div className=''>

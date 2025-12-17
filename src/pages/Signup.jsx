@@ -1,11 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import {z} from "zod";
+import {success, z} from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../store/loginSlice";
 import {BASE_URL} from "../utils/constants"
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const signupSchema=z.object({
   firstName:z.string().nonempty("firstName is required"),
@@ -30,18 +32,19 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
     
      const onSubmit=async(data)=>{
       try{
-       const response=await fetch(BASE_URL+"/signup",{
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify(data),
-           credentials:"include"
-        }); 
-        const jsonResponse=await response.json();
-        dispatch(setUserData(jsonResponse.data));
+       const response=await axios.post(BASE_URL+"/signup",
+          data,
+         {withCredentials:true}
+        ); 
+        dispatch(setUserData(response.data.data));
         reset();
-        navigate("/profile");
+        if(response.data.success){
+           navigate("/profile");
+           toast.success("Signup Successfully!")
+        }
+        
       }catch(error){
-        console.error(error.message);
+        toast.error(error.response.data.message);
       }
 
      }

@@ -5,7 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../store/loginSlice";
-import {BASE_URL} from "../utils/constants"
+import {BASE_URL} from "../utils/constants";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const loginSchema=z.object({
    email: z.string().nonempty("Email is required").email("Invalid email format"),
@@ -19,25 +21,25 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
         resolver:zodResolver(loginSchema),
         mode:"onSubmit",
         defaultValues:{
-            email:"renu29swami@gmail.com",
-            password:"renu@2921"
+            email:"",
+            password:""
         }
     });
-    
-     const onSubmit=async(data)=>{
+
+    const onSubmit=async(data)=>{
       try{
-       const response=await fetch(BASE_URL+"/login",{
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify(data),
-           credentials:"include"
-        }); 
-        const jsonResponse=await response.json();
-        dispatch(setUserData(jsonResponse.data));
+       const response=await axios.post(BASE_URL+"/login",
+           data,
+          {withCredentials:true}); 
+        dispatch(setUserData(response.data.data));
         reset();
-        navigate("/");
+        if(response.data.success){
+           toast.success("Login successful 🎉");
+          navigate("/");
+        }
+        
       }catch(error){
-        console.error(error.message);
+        toast.error(error.response.data.message);
       }
 
      }

@@ -7,6 +7,8 @@ import { setUserData } from "../../store/loginSlice";
 import { BASE_URL } from "../../utils/constants";
 import {z} from "zod";
 import FeedCard from "../feed/FeedCard";
+import axios from "axios";
+import { toast } from "react-toastify";
 const editProfileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -52,26 +54,24 @@ const EditProfile = () => {
     }
   }, [userData, reset]);
 
-  const onSubmit = async (data) => {
+const onSubmit = async (data) => {
     try {
       setLoading(true);
-      const res = await fetch(`${BASE_URL}/profile/edit`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
-
-      const json = await res.json();
-      dispatch(setUserData(json.data));
-      navigate("/");
+      const response = await axios.put(`${BASE_URL}/profile/edit`,
+        data,
+        {withCredentials:true});
+      dispatch(setUserData(response.data.data));
+      if(response.data.success){
+        toast.success("Profile Updated sucessfully!");
+         navigate("/");
+      }
+     
     } catch (err) {
-      console.error(err.message);
+      toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }
   };
-
   if (!userData) return <p className="text-center mt-20">Loading...</p>;
 
   return (
