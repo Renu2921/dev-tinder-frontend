@@ -8,9 +8,12 @@ const feedSlice=createSlice({
     reducers:{
         setFeedData:(state,action)=>{
             state.feedData=action.payload;
+        },
+        removeFeed:(state,action)=>{
+            state.feedData=state.feedData.filter((feed)=>feed._id!==action.payload);
         }
     }
 });
 
-export const {setFeedData}=feedSlice.actions;
+export const {setFeedData,removeFeed}=feedSlice.actions;
 export const feedreducer=feedSlice.reducer;
