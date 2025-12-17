@@ -2,19 +2,10 @@ import { BrowserRouter, Routes,Route } from "react-router-dom"
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { lazy, Suspense } from "react";
 
 import Body from "./pages/Body"
 import store from "./store/store"
-// import Feed from "./pages/feed/Feed"
-// import EditProfile from "./pages/profile/EditProfile"
-// import Connections from "./pages/Connections"
-// import Requests from "./pages/Requests";
-// import Login from "./pages/Login"
-
-// import Profile from "./pages/profile/Profile"
-// import Signup from "./pages/Signup";
-import { lazy, Suspense } from "react";
-
 const Feed =lazy(()=>import("./pages/feed/Feed"));
 const EditProfile =lazy(()=>import("./pages/profile/EditProfile"));
 const Connections =lazy(()=>import("./pages/Connections"));
