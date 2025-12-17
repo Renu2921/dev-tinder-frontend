@@ -1,16 +1,28 @@
 import { BrowserRouter, Routes,Route } from "react-router-dom"
-import Login from "./pages/Login"
-import Body from "./pages/Body"
-import Profile from "./pages/profile/Profile"
-import Signup from "./pages/Signup"
-import { Provider } from "react-redux"
-import store from "./store/store"
-import Feed from "./pages/feed/Feed"
-import EditProfile from "./pages/profile/EditProfile"
-import Connections from "./pages/Connections"
-import Requests from "./pages/Requests";
+import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import Body from "./pages/Body"
+import store from "./store/store"
+// import Feed from "./pages/feed/Feed"
+// import EditProfile from "./pages/profile/EditProfile"
+// import Connections from "./pages/Connections"
+// import Requests from "./pages/Requests";
+// import Login from "./pages/Login"
+
+// import Profile from "./pages/profile/Profile"
+// import Signup from "./pages/Signup";
+import { lazy, Suspense } from "react";
+
+const Feed =lazy(()=>import("./pages/feed/Feed"));
+const EditProfile =lazy(()=>import("./pages/profile/EditProfile"));
+const Connections =lazy(()=>import("./pages/Connections"));
+const Requests =lazy(()=>import("./pages/Requests"));
+const Login =lazy(()=>import("./pages/Login"));
+const Profile =lazy(()=>import("./pages/profile/Profile"));
+const Signup =lazy(()=>import("./pages/Signup"));
+
 
 
 function App() {
@@ -18,6 +30,12 @@ function App() {
     <>
     <Provider store={store}>
    <BrowserRouter basename="/">
+   <Suspense
+  fallback={
+<div className="text-black text-[2.5rem] min-h-screen flex items-center justify-center bg-gradient-to-b from-pink-500 via-red-500 to-orange-500">
+      loading....
+    </div>}>
+
    <Routes >
     <Route path="/" element={<Body/>}>
      <Route index element={<Feed />} />  
@@ -28,8 +46,8 @@ function App() {
    <Route path="/signup" element={<Signup/>}/>
     <Route path="/login" element={<Login/>}/>
    </Route>
-    
-   </Routes>
+    </Routes>
+    </Suspense>
    </BrowserRouter>
    </Provider> 
    <ToastContainer
