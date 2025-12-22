@@ -13,6 +13,7 @@ const Requests =lazy(()=>import("./pages/Requests"));
 const Login =lazy(()=>import("./pages/Login"));
 const Profile =lazy(()=>import("./pages/profile/Profile"));
 const Signup =lazy(()=>import("./pages/Signup"));
+const Chat=lazy(()=>import("./pages/Chat"));
 
 
 
@@ -36,6 +37,7 @@ function App() {
    <Route path="/requests" element={<Requests/>}/>
    <Route path="/signup" element={<Signup/>}/>
     <Route path="/login" element={<Login/>}/>
+    <Route path="/chat/:id" element={<Chat/>}/>
    </Route>
     </Routes>
     </Suspense>

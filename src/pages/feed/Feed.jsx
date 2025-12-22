@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFeedData } from "../../store/feedSlice";
 import axios from "axios";
 import FeedCard from "./FeedCard";
+import { toast } from "react-toastify";
 
 const Feed = () => {
   const[loading,setLoading]=useState(false);
@@ -24,6 +25,9 @@ const Feed = () => {
       dispatch(setFeedData(response.data.data));
     } catch (error) {
       toast.error(error.response.data.message);
+       if(error.response?.status === 401){
+         navigate("/login");
+      }
     }finally{
       setLoading(false);
     }

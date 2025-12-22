@@ -5,6 +5,7 @@ import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from '../store/loginSlice'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Body = () => {
   const dispatch=useDispatch();
@@ -22,9 +23,9 @@ const Body = () => {
      const response=await axios.get(BASE_URL +"/profile/view",{
       withCredentials: true
     });
-    dispatch(setUserData(response.data.data));
+    dispatch(setUserData(response?.data?.data));
     }catch(error){
-       toast.error(error.response.data.message);
+       toast.error(error?.response?.data?.message);
       if(error.response?.status === 401){
          navigate("/login");
       }
