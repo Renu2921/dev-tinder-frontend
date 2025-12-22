@@ -75,10 +75,10 @@ const onSubmit = async (data) => {
   if (!userData) return <p className="text-center mt-20">Loading...</p>;
 
   return (
-    <div className="w-full flex justify-center items-start mt-20 gap-20 min-h-screen">
+    <div className="w-full flex justify-center items-start mt-10 md:mt-20 gap-20 min-h-screen">
      <form
   onSubmit={handleSubmit(onSubmit)}
-  className="w-[100%] rounded-xl p-10 shadow-xl border"
+  className="w-[100%] rounded-xl p-4 md:p-10 shadow-xl border"
 >
   <h2 className="text-2xl font-semibold mb-6">Edit Profile</h2>
 
@@ -90,11 +90,9 @@ const onSubmit = async (data) => {
       className="w-full px-3 py-2 rounded bg-gray-300"
     />
     {errors.firstName && (
-      <p className="text-sm text-red-600">{errors.firstName.message}</p>
+      <p className="text-sm text-white">{errors.firstName.message}</p>
     )}
   </div>
-
-  {/* Last Name */}
   <div className="mb-4">
     <label className="block mb-1">Last Name</label>
     <input
@@ -103,11 +101,9 @@ const onSubmit = async (data) => {
       className="w-full px-3 py-2 rounded bg-gray-300"
     />
     {errors.lastName && (
-      <p className="text-sm text-red-600">{errors.lastName.message}</p>
+      <p className="text-sm text-white">{errors.lastName.message}</p>
     )}
   </div>
-
-  {/* Photo URL */}
   <div className="mb-4">
     <label className="block mb-1">Photo URL</label>
     <input
@@ -116,11 +112,9 @@ const onSubmit = async (data) => {
       className="w-full px-3 py-2 rounded bg-gray-300"
     />
     {errors.imageUrl && (
-      <p className="text-sm text-red-600">{errors.imageUrl.message}</p>
+      <p className="text-sm text-white">{errors.imageUrl.message}</p>
     )}
   </div>
-
-  {/* Age */}
   <div className="mb-4">
     <label className="block mb-1">Age</label>
     <input
@@ -129,11 +123,9 @@ const onSubmit = async (data) => {
       className="w-full px-3 py-2 rounded bg-gray-300"
     />
     {errors.age && (
-      <p className="text-sm text-red-600">{errors.age.message}</p>
+      <p className="text-sm text-white">{errors.age.message}</p>
     )}
   </div>
-
-  {/* Gender */}
   <div className="mb-4">
     <label className="block mb-1">Gender</label>
     <input
@@ -142,11 +134,9 @@ const onSubmit = async (data) => {
       className="w-full px-3 py-2 rounded bg-gray-300"
     />
     {errors.gender && (
-      <p className="text-sm text-red-600">{errors.gender.message}</p>
+      <p className="text-sm text-white">{errors.gender.message}</p>
     )}
   </div>
-
-  {/* About */}
   <div className="mb-6">
     <label className="block mb-1">About</label>
     <textarea
@@ -154,7 +144,7 @@ const onSubmit = async (data) => {
       className="w-full px-3 py-2 rounded bg-gray-300"
     />
     {errors.about && (
-      <p className="text-sm text-red-600">{errors.about.message}</p>
+      <p className="text-sm text-white">{errors.about.message}</p>
     )}
   </div>
 
@@ -165,7 +155,7 @@ const onSubmit = async (data) => {
       className="w-full px-3 py-2 rounded bg-gray-300"
     />
     {errors.skills && (
-      <p className="text-sm text-red-600">{errors.skills.message}</p>
+      <p className="text-sm text-white">{errors.skills.message}</p>
     )}
   </div>
 

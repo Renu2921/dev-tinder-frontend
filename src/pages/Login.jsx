@@ -44,11 +44,10 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
 
      }
   return (
-    <div className=" w-full  h-screen border border-red-500">
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="w-full flex justify-center items-center px-4 mt-20 md:mt-28">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[30%] border border-gray-700 rounded-xl py-20 pt-10 flex flex-col justify-center items-center p-10 shadow-xl"
+        className="w-full sm:w-[90%] md:w-[50%] lg:w-[40%] xl:w-[30%] border border-gray-700 rounded-xl py-10 px-6 md:px-10 shadow-xl"
       >
         <p className="self-start font-bold text-[2rem] mb-8">Login!</p>
         <p className="self-start mb-1">Email:</p>
@@ -62,7 +61,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
         {errors.email && (
             <p className="text-sm self-start mt-0 text-white">{errors.email.message}</p>
         )}
-        <p className="self-start mb-1 mt-10">Password:</p>
+        <p className="self-start mb-1 mt-6 md:mt-10">Password:</p>
         <input
           type="password"
           placeholder="Enter password"
@@ -73,14 +72,13 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
         {errors.password && (
             <p className="text-sm self-start text-white">{errors.password.message}</p>
         )}
-        <button type="submit" className=" mt-10  text-white px-4 py-1 rounded-xl border border-gray-700">
+        <button type="submit" className="mt-8 w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold px-4 py-2 rounded-xl transition">
           Login
         </button>
          <p className='self-start mt-6 text-s'>Create an account? <Link to ="/signup"><span className='text-blue-600'>Signup</span></Link></p>
       
       </form>
       </div>
-    </div>
   );
 };
 

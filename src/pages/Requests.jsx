@@ -69,15 +69,15 @@ if (loading) {
   return (
    <div className=''>
       <p className='text-center font-bold text-[2rem] m-10'>Your Requests!!</p>
-      <div className='flex flex-col justify-center items-center'>
+      <div className='w-full flex flex-col justify-center md:items-center'>
         {requestData?.map((req)=>(
-            <div className='w-[40%] border rounded-xl flex  items-center justify-between gap-2 px-6 py-2  mt-4 ' key={req?._id}>
+            <div className=' md:w-[50%]  border rounded-xl flex justify-between items-center gap-4 px-3 md:px-6 py-2  mt-4 mx-2 md:mx-0' key={req?._id}>
                <div className='flex items-center gap-3'>
-                <img className='w-20 h-20 rounded-[100%]' src={req?.fromUserId?.imageUrl}/>
+                <img className='w-20 h-20 md:w-28 md:h-28 rounded-[100%]' src={req?.fromUserId?.imageUrl}/>
                 <div>
-               <p className='font-semibold text-[1.5rem]'><span>{req?.fromUserId?.firstName}</span> <span>{req?.fromUserId?.lastName}</span></p> 
-               <p><span>{req?.fromUserId?.age}</span>, <span>{req?.fromUserId?.gender}</span></p> 
-               <p>{req?.about}</p> 
+               <p className='font-semibold text-[1rem] md:text-[1.5rem] capitalize'><span>{req?.fromUserId?.firstName}</span> <span>{req?.fromUserId?.lastName}</span></p> 
+               <p className='text-[0.8rem] md:text-[1rem]'><span>{req?.fromUserId?.age}</span>, <span>{req?.fromUserId?.gender}</span></p> 
+               <p className='text-[0.8rem] md:text-[1rem]'>{req?.about}</p> 
                </div>
                </div>
                <div className='flex gap-2'>

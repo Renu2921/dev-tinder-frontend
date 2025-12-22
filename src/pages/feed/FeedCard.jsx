@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { removeFeed } from '../../store/feedSlice';
 import { BASE_URL } from '../../utils/constants';
 import { useDispatch } from 'react-redux';
@@ -6,9 +6,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const FeedCard = ({feed}) => {
+  const [loading,setLoading]=useState(false);
     const dispatch=useDispatch();
      const handleReq=async(id,status)=>{
        try{
+        setLoading(true);
               const response=await axios.post(`${BASE_URL}/request/send/${status}/${id}`,
                 {},
                 {withCredentials:true}
@@ -23,23 +25,24 @@ const FeedCard = ({feed}) => {
               }
              }catch(error){
              toast.error(error.response.data.message);
+           }finally{
+            setLoading(false);
            }
     }
   return (
-    <div>
       <div className="card bg-base-100 w-96 shadow-sm">
   <figure>
     <img
       src={feed?.imageUrl}
-      alt="image" className='mt-4 rounded-lg' />
+      alt="image" className='mt-4 rounded-lg w-[14rem] h-[14rem] md:w-[20rem] md:h-[20rem] object-cover' />
   </figure>
-  <div className="card-body">
+  <div className="card-body py-2">
     <h2 className="card-title text-2xl font-semibold text-gray-800 capitalize ">{feed?.firstName} {feed?.lastName}
             <span className="text-gray-500">{feed?.age}</span></h2>
              <p className="text-sm text-gray-500 capitalize">
             {feed?.gender}
           </p>
-          <div className=" bg-gray-100 rounded-lg p-3">
+          <div className=" bg-gray-100 rounded-lg p-2">
           <p className="text-sm text-gray-700">{feed?.about}</p>
            {feed?.skills?.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
@@ -58,9 +61,11 @@ const FeedCard = ({feed}) => {
         <button className='border bg-pink-500 px-3 py-2 rounded-xl text-md font-semibold' onClick={()=>handleReq(feed?._id, "interested")}>interested</button>
         <button className='bg-purple-400 border px-3 py-3 rounded-xl text-md font-semibold' onClick={()=>handleReq(feed?._id, "ignored")}>Ignore</button>
     </div>
+    <div className='flex justify-center'>
+      {loading?<div className="w-10 h-10 border-4 border-pink-800 border-t-transparent rounded-full animate-spin"></div>:""}
+      </div>
   </div>
 </div>
-    </div>
   )
 }
 

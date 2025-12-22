@@ -49,65 +49,75 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
 
      }
   return (
-    <div className=" w-full  h-screen border border-red-500">
-      <div className="flex justify-center items-center min-h-screen">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-[30%] border border-gray-700 rounded-xl py-20 pt-10 flex flex-col justify-center items-center p-10 shadow-xl"
-      >
-        <p className="self-start font-bold text-[2rem] mb-8">Signup!</p>
-         <p className="self-start mb-1 ">FirstName:</p>
-        <input
-          type="firstName"  
-          placeholder="Enter your firstName "
-          className="px-3 py-2 border border-gray-400 w-full rounded-xl bg-gray-300"
-          name="firstName"
-          {...register("firstName")}
-        />
-        {errors.firstName && (
-            <p className="text-sm self-start mt-0 text-white">{errors.firstName.message}</p>
-        )}
-         <p className="self-start mb-1 mt-4">LastName:</p>
-        <input
-          type="lastName"  
-          placeholder="Enter your lastName"
-          className="px-3 py-2 border border-gray-400 w-full rounded-xl bg-gray-300"
-          name="lastName"
-          {...register("lastName")}
-        />
-        {errors.lastName && (
-            <p className="text-sm self-start mt-0 text-white">{errors.lastName.message}</p>
-        )}
-        <p className="self-start mb-1 mt-4">Email:</p>
-        <input
-          type="email"  
-          placeholder="Enter your email Address"
-          className="px-3 py-2 border border-gray-400 w-full rounded-xl bg-gray-300"
-          name="email"
-          {...register("email")}
-        />
-        {errors.email && (
-            <p className="text-sm self-start mt-0 text-white">{errors.email.message}</p>
-        )}
-        <p className="self-start mb-1 mt-4">Password:</p>
-        <input
-          type="password"
-          placeholder="Enter password"
-          className="px-3 py-2 border border-gray-400 w-full rounded-xl bg-gray-300"
-          name="password"
-          {...register("password")}
-        />
-        {errors.password && (
-            <p className="text-sm self-start text-white">{errors.password.message}</p>
-        )}
-        <button type="submit" className=" mt-10  text-white px-4 py-1 rounded-xl border border-gray-700">
-          Signup
-        </button>
-         <p className='self-start mt-6 text-s'>Already have an account? <Link to ="/login"><span className='text-blue-600'>Login</span></Link></p>
-      
-      </form>
-      </div>
-    </div>
+     <div className="w-full flex justify-center items-center px-4 mt-10 md:mt-20">
+  <form
+    onSubmit={handleSubmit(onSubmit)}
+    className="w-full sm:w-[90%] md:w-[50%] lg:w-[40%] xl:w-[30%] border border-gray-700 rounded-xl py-10 px-6 md:px-10 shadow-xl"
+  >
+    <p className="font-bold text-3xl mb-6">Signup!</p>
+    <label className="font-medium">First Name:</label>
+    <input
+      {...register("firstName")}
+      className="w-full px-3 py-2 border border-gray-400 rounded-xl bg-gray-200 mt-1"
+      placeholder="Enter your First Name"
+    />
+    {errors.firstName && (
+      <p className="text-red-500 text-sm mt-1">
+        {errors.firstName.message}
+      </p>
+    )}
+    <label className="font-medium mt-4 block">Last Name:</label>
+    <input
+      {...register("lastName")}
+      className="w-full px-3 py-2 border border-gray-400 rounded-xl bg-gray-200 mt-1"
+      placeholder="Enter your Last Name"
+    />
+    {errors.lastName && (
+      <p className="text-red-500 text-sm mt-1">
+        {errors.lastName.message}
+      </p>
+    )}
+
+    <label className="font-medium mt-4 block">Email:</label>
+    <input
+      type="email"
+      {...register("email")}
+      className="w-full px-3 py-2 border border-gray-400 rounded-xl bg-gray-200 mt-1"
+      placeholder="Enter your Email"
+    />
+    {errors.email && (
+      <p className="text-red-500 text-sm mt-1">
+        {errors.email.message}
+      </p>
+    )}
+    <label className="font-medium mt-4 block">Password:</label>
+    <input
+      type="password"
+      {...register("password")}
+      className="w-full px-3 py-2 border border-gray-400 rounded-xl bg-gray-200 mt-1"
+      placeholder="Enter Password"
+    />
+    {errors.password && (
+      <p className="text-red-500 text-sm mt-1">
+        {errors.password.message}
+      </p>
+    )}
+    <button
+      type="submit"
+      className="mt-8 w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold px-4 py-2 rounded-xl transition"
+    >
+      Signup
+    </button>
+
+    <p className="mt-4 text-sm">
+      Already have an account?{" "}
+      <Link to="/login">
+        <span className="text-blue-600 font-medium">Login</span>
+      </Link>
+    </p>
+  </form>
+</div>
+
   );
 };
 

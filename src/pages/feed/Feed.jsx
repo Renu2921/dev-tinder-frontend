@@ -5,6 +5,7 @@ import { setFeedData } from "../../store/feedSlice";
 import axios from "axios";
 import FeedCard from "./FeedCard";
 import { toast } from "react-toastify";
+import Spinner from "../Spinner";
 
 const Feed = () => {
   const[loading,setLoading]=useState(false);
@@ -34,9 +35,7 @@ const Feed = () => {
   };
   if (loading) {
   return (
-    <div className="flex justify-center items-center mt-40">
-      <div className="w-10 h-10 border-4 border-pink-800 border-t-transparent rounded-full animate-spin"></div>
-    </div>
+   <Spinner/>
   );
 }
 
@@ -51,7 +50,7 @@ const Feed = () => {
     )
   }
   return (
-    <div className="flex justify-center mt-20">
+    <div className="flex justify-center mt-16 md:mt-20 px-4 md:px-0">
       <FeedCard feed={feedData?.[0]} />
     </div>
   );

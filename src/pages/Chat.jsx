@@ -64,9 +64,9 @@ const Chat = () => {
     chatMessages();
   }, []);
   return (
-    <div className="w-full mt-20 flex justify-center items-center">
-      <div className="border border-black  w-[40%] rounded-xl ">
-        <p className="border-b pl-4 py-3 font-bold text-[1.5rem]">Chat</p>
+    <div className="w-full mt-4 md:mt-20 flex justify-center items-center">
+      <div className="border border-black  w-full md:w-[40%] mx-4 md:mx-0 rounded-xl ">
+        <p className="border-b border-black pl-4 py-3 font-bold text-[1.5rem]">Chat</p>
         <div className="flex-1 overflow-y-scroll h-[30rem] p-3">
           {displayMessage.map((msg, index) => {
             return (
@@ -89,9 +89,9 @@ const Chat = () => {
             );
           })}
         </div>
-        <div className="flex justify-between gap-2 border-t py-5 px-2 w-full">
+        <div className="flex justify-between gap-2 border-t border-black py-5 px-2 w-full">
           <input
-            className=" rounded bg-transparent border w-[90%]"
+            className=" rounded bg-transparent border border-black w-[90%]"
             name="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}

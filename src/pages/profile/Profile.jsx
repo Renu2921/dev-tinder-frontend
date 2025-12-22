@@ -9,8 +9,8 @@ const Profile = () => {
   const userData = useSelector((store) => store.login.userData);
   
   return (
-    <div className='flex w-full justify-center items-start gap-10'>
-      <div className="w-[380px] bg-white rounded-2xl shadow-2xl p-6 mt-20">
+    <div className='md:flex w-full justify-center items-start gap-10 px-3 md:px-0'>
+      <div className="w-full md:w-[380px] bg-white rounded-2xl shadow-2xl p-6 mt-10 md:mt-20">
         <div className="flex justify-center">
           <img
             src={userData?.imageUrl}
@@ -47,7 +47,7 @@ const Profile = () => {
         )}
        
       </div>
-      <div className='w-[40%]'>
+      <div className='w-full md:w-[40%]'>
     <EditProfile/>
     </div>
     </div>
