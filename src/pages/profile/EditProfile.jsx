@@ -163,7 +163,7 @@ const onSubmit = async (data) => {
     type="submit"
     className="w-full py-2 bg-red-500 text-white rounded"
   >
-    Save Profile
+    {loading?"Saving...":"Save Profile"}
   </button>
 </form>
     </div>

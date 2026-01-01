@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {success, z} from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,6 +17,7 @@ const signupSchema=z.object({
 })
 
 const Signup = () => {
+  const[loading,setLoading]=useState(false);
   const dispatch=useDispatch();
   const navigate=useNavigate();
 const {register,reset,handleSubmit,formState: { errors }}=useForm({
@@ -32,6 +33,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
     
      const onSubmit=async(data)=>{
       try{
+        setLoading(true);
        const response=await axios.post(BASE_URL+"/signup",
           data,
          {withCredentials:true}
@@ -39,6 +41,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
         dispatch(setUserData(response.data.data));
         reset();
         if(response.data.success){
+          setLoading(false);
            navigate("/profile");
            toast.success("Signup Successfully!")
         }
@@ -62,7 +65,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
       placeholder="Enter your First Name"
     />
     {errors.firstName && (
-      <p className="text-red-500 text-sm mt-1">
+      <p className="text-white text-sm mt-1">
         {errors.firstName.message}
       </p>
     )}
@@ -73,7 +76,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
       placeholder="Enter your Last Name"
     />
     {errors.lastName && (
-      <p className="text-red-500 text-sm mt-1">
+      <p className="text-white text-sm mt-1">
         {errors.lastName.message}
       </p>
     )}
@@ -86,7 +89,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
       placeholder="Enter your Email"
     />
     {errors.email && (
-      <p className="text-red-500 text-sm mt-1">
+      <p className="text-white text-sm mt-1">
         {errors.email.message}
       </p>
     )}
@@ -98,7 +101,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
       placeholder="Enter Password"
     />
     {errors.password && (
-      <p className="text-red-500 text-sm mt-1">
+      <p className="text-white text-sm mt-1">
         {errors.password.message}
       </p>
     )}
@@ -106,7 +109,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
       type="submit"
       className="mt-8 w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold px-4 py-2 rounded-xl transition"
     >
-      Signup
+      {loading?"loading...":"Signup"}
     </button>
 
     <p className="mt-4 text-sm">

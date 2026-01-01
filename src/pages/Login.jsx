@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {z} from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,6 +15,7 @@ const loginSchema=z.object({
 })
 
 const Login = () => {
+  const [loading,setLoading]=useState(false);
   const dispatch=useDispatch();
   const navigate=useNavigate();
 const {register,reset,handleSubmit,formState: { errors }}=useForm({
@@ -28,12 +29,14 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
 
     const onSubmit=async(data)=>{
       try{
+        setLoading(true);
        const response=await axios.post(BASE_URL+"/login",
            data,
           {withCredentials:true}); 
         dispatch(setUserData(response.data.data));
         reset();
         if(response.data.success){
+          setLoading(false);
            toast.success("Login successful 🎉");
           navigate("/");
         }
@@ -73,7 +76,7 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
             <p className="text-sm self-start text-white">{errors.password.message}</p>
         )}
         <button type="submit" className="mt-8 w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold px-4 py-2 rounded-xl transition">
-          Login
+         {loading?"Loading...":"Login"}
         </button>
          <p className='self-start mt-6 text-s'>Create an account? <Link to ="/signup"><span className='text-blue-600'>Signup</span></Link></p>
       
