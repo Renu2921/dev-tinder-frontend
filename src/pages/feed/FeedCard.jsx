@@ -13,7 +13,11 @@ const FeedCard = ({feed}) => {
         setLoading(true);
               const response=await axios.post(`${BASE_URL}/request/send/${status}/${id}`,
                 {},
-                {withCredentials:true}
+{
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
               );
               if(response.data.success){
                    dispatch(removeFeed(id));

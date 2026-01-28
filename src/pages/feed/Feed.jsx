@@ -6,10 +6,12 @@ import axios from "axios";
 import FeedCard from "./FeedCard";
 import { toast } from "react-toastify";
 import Spinner from "../Spinner";
+import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
   const[loading,setLoading]=useState(false);
   const dispatch = useDispatch();
+  const navigate=useNavigate();
 
   const feedData = useSelector((store) => store.feed.feedData);
 
@@ -21,7 +23,9 @@ const Feed = () => {
     try {
       setLoading(true);
       const response = await axios.get(BASE_URL + "/myFeed", {
-        withCredentials: true,
+       headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
       });
       dispatch(setFeedData(response.data.data));
     } catch (error) {

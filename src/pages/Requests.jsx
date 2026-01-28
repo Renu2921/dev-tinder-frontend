@@ -21,7 +21,9 @@ const requestData=useSelector((store)=>store.request.requests);
             setLoading(true);
            const response=await fetch(BASE_URL+"/request/received",{
             method:"GET",
-            credentials:"include"
+            headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
            })
            const jsonData=await response.json();
            dispatch(setRequests(jsonData.data));
@@ -35,7 +37,11 @@ const requestData=useSelector((store)=>store.request.requests);
     const handleReq=async(id,status)=>{
      try{
         const response=await axios.post(`${BASE_URL}/request/review/${status}/${id}`,{},
-             {withCredentials:true}
+            {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
         );
         if(response.data.success){
             dispatch(removeReq(id));

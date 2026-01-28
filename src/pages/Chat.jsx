@@ -46,7 +46,9 @@ const Chat = () => {
   const chatMessages = async () => {
     try {
       const chat = await axios.get(`${BASE_URL}/chat/${id}`, {
-        withCredentials: true,
+        headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
       });
       const messageDb = chat.data.data.messages.map((msg) => {
         return {

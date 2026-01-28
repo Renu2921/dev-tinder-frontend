@@ -59,7 +59,12 @@ const onSubmit = async (data) => {
       setLoading(true);
       const response = await axios.put(`${BASE_URL}/profile/edit`,
         data,
-        {withCredentials:true});
+        {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
+      );
       dispatch(setUserData(response.data.data));
       if(response.data.success){
         toast.success("Profile Updated sucessfully!");

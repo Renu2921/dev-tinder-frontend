@@ -14,7 +14,9 @@ const Navbar = () => {
   const handleLogout=async()=>{
      try{
      const response= await axios.post(BASE_URL+"/logout",{
-       withCredentials: true
+       headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
      })
      dispatch(removeUser());
       toast.success("Logout Successfully");

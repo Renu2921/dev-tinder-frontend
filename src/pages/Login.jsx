@@ -32,10 +32,12 @@ const {register,reset,handleSubmit,formState: { errors }}=useForm({
         setLoading(true);
        const response=await axios.post(BASE_URL+"/login",
            data,
-          {withCredentials:true}); 
+          // {withCredentials:true}
+        ); 
         dispatch(setUserData(response.data.data));
         reset();
         if(response.data.success){
+          localStorage.setItem("token", response.data.token);
           setLoading(false);
            toast.success("Login successful 🎉");
           navigate("/");

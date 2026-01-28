@@ -19,7 +19,9 @@ const connections=useSelector((store)=>store.connection.connections);
           setLoading(true);
            const response=await fetch(BASE_URL+"/request/myMatches",{
             Method:"GET",
-            credentials:"include"
+           headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
            })
            const jsonData=await response.json();
             dispatch(setConnections(jsonData.data))

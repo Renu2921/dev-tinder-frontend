@@ -21,7 +21,9 @@ const Body = () => {
     if(userData) return;
     try{
      const response=await axios.get(BASE_URL +"/profile/view",{
-      withCredentials: true
+      headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
     });
     dispatch(setUserData(response?.data?.data));
     }catch(error){
